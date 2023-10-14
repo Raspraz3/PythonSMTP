@@ -1,90 +1,106 @@
 import socket
+import ssl
+import smtplib
+
+# Define the sender and recipient email address
+sender_email = "raspraz2@aol.com"
+recipient_email = "Davon.raspberry3@gmail.com"
 
 
-    def smtp_client(port=1025, mailserver='127.0.0.1'):
+def smtp_client(port, mailserver):
     msg = "\r\n My message"
     endmsg = "\r\n.\r\n"
 
-    #Choose a mail server (e.g. Google mail server) if you want to verify the script beyond GradeScope
-    server_hostname = "smtp.aol.com"
-    server_port = 1025
-    # Create socket called clientSocket and establish a TCP connection with mailserver and port
+    # Define the email message
+    subject = "Subject: Your Subject Here\r\n"
+    message = "Your message goes here."
+
+    # Choose a mail server (e.g. Google mail server) if you want to verify the script beyond GradeScope
+
+
 
     # Fill in start
+    # Create socket called clientSocket and establish a TCP connection with mailserver and port
     clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    #print("Connection to mail server established")
+    clientsocket.connect((mailserver, port))
 
-    try:
-        clientsocket.settimeout(30)
-        clientsocket.connect((server_hostname, server_port))
-       # print("Connected to the mail server")
-    except ConnectionRefusedError:
-       # print("Connection NOT established")
-    except Exception as e:
-       # print(f"An error occurred: {str(e)}")
-        return
-    
+    # Recieve the server's response
     recv = clientsocket.recv(1024).decode()
-    # Fill in end
+    #print(recv)
+    # Fill end
 
-    #print(recv)="You can use these print statement to validate return codes from the server."
     if recv[:3] != '220':
-     #print('220 reply not received from server.')
+       #print('220 reply not received from server.')
 
     # Send HELO command and print server response.
     heloCommand = 'HELO Alice\r\n'
     clientsocket.send(heloCommand.encode())
     recv1 = clientsocket.recv(1024).decode()
-    #print(recv1)
+    print(recv1)
+    #
     if recv1[:3] != '250':
-        #print('250 reply not received from the server.')
+       #print('250 reply not received from server.')
 
     # Send MAIL FROM command and handle server response.
     # Fill in start
-    mailFromCommand = 'MAIL FROM: <raspraz2@aol.com>\r\n'
-    clientsocket.send(mailFromCommand.encode())
-    recv2 = clientsocket.recv(1024).decode()
-    #print(recv2)
-    # Fill in end
+    sender_email = "raspraz2@aol.com"
+    recipient_email = "Davon.raspberry3@gmail.com"
+    app_password = 'bspu rgte ttfu hqwr'
 
-    # Send RCPT TO command and handle server response.
-    # Fill in start
-    rcptToCommand = 'RCPT TO: <davon.raspberry3@example.com>\r\n'
-    clientsocket.send(rcptToCommand.encode())
-    recv3 = clientsocket.recv(1024).decode()
-    #print(recv3)
-    # Fill in end
+    context = ssl.create_default_context()
+    try:
+        with smtplib.SMTP("smtp.aol.com", 1025) as server:
+            server.ehlo()  # Identify yourself to the SMTP server
+            server.starttls(context=context)  # Upgrade the connection to secure (TLS)
+
+            # Replace 'your_email@gmail.com' and 'your_password' with your Gmail credentials
+            server.login(Raspraz2@aol.com, BBBBBBBDAAAAAA1)
+
+            mailFromCommand = f"MAIL FROM: {Raspraz2@aol.com}\r\n"
+
+            # Get the server response
+            response = server.sendmail(sender_email, recipient_email, mailFromCommand)
+            #print("Email sent successfully")
+            #print(f"Server Response:{response}")
+
+    except smtplib.SMTPException as e:
+        # Handle SMTP exceptions, if any
+        #print(f"SMTP Exception: {e}")
+    except Exception as e:
+        #print(f"An error occurred: {e}")
+
 
     # Send DATA command and handle server response.
     # Fill in start
-    dataCommand = 'DATA\r\n'
-    clientsocket.send(dataCommand.encode())
-    recv4 = clientsocket.recv(1024).decode()
-    #print(recv4)
+    # Send the DATA command
+    data_command = "DATA\r\n"
+    clientsocket.send(data_command.encode())
+    recv_data = clientsocket.recv(1024).decode()
+    #print(recv_data)
     # Fill in end
 
-    # Send message data.
-    # Fill in start
-    clientsocket.send(msg.encode())
-    # Fill in end
+    # End the email message
+    end_message = "\r\n.\r\n"
+    clientsocket.send(end_message.encode())
+    recv_data = clientsocket.recv(1024).decode()
+    #print(recv_data)
 
-    # Message ends with a single period, send message end and handle server response.
-    # Fill in start
-    clientsocket.settimeout(60)
-    clientsocket.send(endmsg.encode())
-    recv5 = clientsocket.recv(1024).decode()
-   # print(recv5)
-    # Fill in end
+    # Send the QUIT command
+    quit_command = "QUIT\r\n"
+    clientsocket.send(quit_command.encode())
+    recv_data = clientsocket.recv(1024).decode()
+    #print(recv_data)
 
-    # Send QUIT command and handle server response.
-    # Fill in start
-    quitCommand = 'QUIT\r\n'
-    clientsocket.send(quitCommand.encode())
-    recv6 = clientsocket.recv(1024).decode()
-    #print(recv6)
+    # Close the socket
+    clientsocket.close()
     # Fill in end
 
     clientsocket.close()
 
+
 if __name__ == '__main__':
-    smtp_client(1025, '127.0.0.1')
+    # Define the SMTP server's hostname and port
+    smtp_server = "smtp.aol.com"
+    smtp_port = 1025
+
+    smtp_client(smtp_port, smtp_server)
