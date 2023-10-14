@@ -1,14 +1,13 @@
 import socket
 
 
-def smtp_client():
+    def smtp_client(port=1025, mailserver='127.0.0.1'):
     msg = "\r\n My message"
     endmsg = "\r\n.\r\n"
 
     #Choose a mail server (e.g. Google mail server) if you want to verify the script beyond GradeScope
-    server_hostname = "smtp.gmail.com"
-    # server_port = 1025
-    server_port = 587
+    server_hostname = "smtp.aol.com"
+    server_port = 1025
     # Create socket called clientSocket and establish a TCP connection with mailserver and port
 
     # Fill in start
@@ -24,6 +23,7 @@ def smtp_client():
     except Exception as e:
        # print(f"An error occurred: {str(e)}")
         return
+    
     recv = clientsocket.recv(1024).decode()
     # Fill in end
 
@@ -41,7 +41,7 @@ def smtp_client():
 
     # Send MAIL FROM command and handle server response.
     # Fill in start
-    mailFromCommand = 'MAIL FROM: <raspraz2@gmail.com>\r\n'
+    mailFromCommand = 'MAIL FROM: <raspraz2@aol.com>\r\n'
     clientsocket.send(mailFromCommand.encode())
     recv2 = clientsocket.recv(1024).decode()
     #print(recv2)
@@ -87,4 +87,4 @@ def smtp_client():
     clientsocket.close()
 
 if __name__ == '__main__':
-    smtp_client()
+    smtp_client(1025, '127.0.0.1')
