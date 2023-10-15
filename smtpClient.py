@@ -12,14 +12,14 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     #print("Connection to mail server established")
 
-    try:
+    #try:
         clientsocket.connect((server_hostname, server_port))
         #print("Connected to the mail server")
-    except ConnectionRefusedError:
+    #except ConnectionRefusedError:
     #print("Connection NOT established")
-    except Exception as e:
+    #except Exception as e:
         #print(f"An error occurred: {str(e)}")
-        return
+        #return
     recv = clientsocket.recv(1024).decode()
     # Fill in end
 
