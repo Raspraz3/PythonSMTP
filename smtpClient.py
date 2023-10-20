@@ -12,14 +12,14 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     # Create socket called clientSocket and establish a TCP connection with the mailserver and port
     clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    #try:
+    try:
         clientsocket.settimeout(60)
         clientsocket.connect((server_hostname, server_port))
     #except ConnectionRefusedError:
         #print("Connection NOT established")
     #except Exception as e:
         #print(f"An error occurred: {str(e)}")
-    #return
+    return
 
     #recv = clientsocket.recv(1024).decode()
 
