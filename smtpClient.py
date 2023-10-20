@@ -18,7 +18,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
         #print("Connection NOT established")
     #except Exception as e:
         #print(f"An error occurred: {str(e)}")
-        return
+        #return
 
     recv = clientsocket.recv(1024).decode()
 
