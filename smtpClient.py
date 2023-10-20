@@ -1,6 +1,6 @@
 import socket
 
-def smtp_client(port=1025, mailserver='smtp.aol.com'):
+def smtp_client(port=1025, mailserver='127.0.0.1'):
     msg = "\r\n My message.\r\n"
     endmsg = "\r\n.\r\n"
 
@@ -9,52 +9,53 @@ def smtp_client(port=1025, mailserver='smtp.aol.com'):
     clientsocket.connect((mailserver, port))
 
     recv = clientsocket.recv(1024).decode()
-    #print(recv)
+    #if recv[:3] != '220':
+    #    print('220 reply not received from server.')
 
     
     heloCommand = 'HELO Alice\r\n'
     clientsocket.send(heloCommand.encode())
-    recv1 = clientsocket.recv(1024).decode()
-    #print(recv1)
+    recv = clientsocket.recv(1024).decode()
+    #print(recv)
 
     
     clientsocket.send('STARTTLS\r\n'.encode())
-    recv2 = clientsocket.recv(1024).decode()
-    #print(recv2)
+    recv = clientsocket.recv(1024).decode()
+    #print(recv)
 
     
     mailFromCommand = 'MAIL FROM: <raspraz2@aol.com>\r\n'
     clientsocket.send(mailFromCommand.encode())
-    recv3 = clientsocket.recv(1024).decode()
-    #print(recv3)
+    #recv = clientsocket.recv(1024).decode()
+    #print(recv)
 
     
     rcptToCommand = 'RCPT TO: <davon.raspberry3@gmail.com>\r\n'
     clientsocket.send(rcptToCommand.encode())
-    recv4 = clientsocket.recv(1024).decode()
-    #print(recv4)
+    recv = clientsocket.recv(1024).decode()
+    #print(recv)
 
     
     dataCommand = 'DATA\r\n'
     clientsocket.send(dataCommand.encode())
-    recv5 = clientsocket.recv(1024).decode()
-    #print(recv5)
+    recv = clientsocket.recv(1024).decode()
+    #print(recv)
 
     
     clientsocket.send(msg.encode())
 
     
     clientsocket.send(endmsg.encode())
-    recv6 = clientsocket.recv(1024).decode()
-    #print(recv6)
+    recv = clientsocket.recv(1024).decode()
+    #print(recv)
 
     
     quitCommand = 'QUIT\r\n'
     clientsocket.send(quitCommand.encode())
-    recv7 = clientsocket.recv(1024).decode()
-    #print(recv7)
+    recv = clientsocket.recv(1024).decode()
+    #print(recv)
 
     clientsocket.close()
 
 if __name__ == '__main__':
-    smtp_client(1025, 'smtp.aol.com')
+    smtp_client(1025, '127.0.0.1')
