@@ -26,7 +26,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     
     mailFromCommand = 'MAIL FROM: <raspraz2@aol.com>\r\n'
     clientsocket.send(mailFromCommand.encode())
-    #recv = clientsocket.recv(1024).decode()
+    recv = clientsocket.recv(1024).decode()
     #print(recv)
 
     
